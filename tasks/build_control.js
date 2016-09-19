@@ -88,8 +88,8 @@ module.exports = function ( grunt ) {
      * Check if there are unpushed changes in source repo
      * @returns {boolean}
      */
-    function checkIfEverythingPushed() {
-      return !shelljs.exec( 'git rev-list staging-trackback-net...origin/staging-trackback-net', { silent: true } ).output;
+    function checkIfEverythingPushed( branch ) {
+      return !shelljs.exec( 'git rev-list ' + branch + '...origin/' + branch, { silent: true } ).output;
     }
 
 
@@ -392,7 +392,7 @@ module.exports = function ( grunt ) {
       remoteName = options.remote;
 
       // If requires all changes to be pushed but they arent - throw error
-      if ( options.requireSync && !checkIfEverythingPushed() ) {
+      if ( options.requireSync && !checkIfEverythingPushed( options.branch ) ) {
         throw( 'Please push your changes first or change `options.requireSync` to false.' );
       }
 
