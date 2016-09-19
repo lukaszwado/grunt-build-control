@@ -89,7 +89,7 @@ module.exports = function ( grunt ) {
      * @returns {boolean}
      */
     function checkIfEverythingPushed() {
-      return (shelljs.exec( 'git --version', { silent: true } ).output || '').toLowerCase().indexOf( 'everything up-to-date' ) > -1;
+      return (shelljs.exec( 'git push -n', { silent: true } ).output || '').toLowerCase().indexOf( 'everything up-to-date' ) > -1;
     }
 
 
