@@ -4,7 +4,7 @@
 
 ## Getting started
 
-This plugin requires [Grunt](http://gruntjs.com/) `~0.4.0` and [Git](http://git-scm.com/) `>= 1.8`.  
+This plugin requires [Grunt](http://gruntjs.com/) `~0.4.0` and [Git](http://git-scm.com/) `>= 1.8`.
 grunt-build-control also supports [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) `>= v3.5.2`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide which explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with Grunt you can install the plugin with the command:
@@ -43,29 +43,34 @@ Add the build directory to the main project's .gitignore, and make sure the buil
 
 
 #### dir
-Type: `String`  
-Default: `dist`  
+Type: `String`
+Default: `dist`
 
 The directory that contains your built code.
 
 
 #### branch
-Type: `String`  
-Default: `dist`  
+Type: `String`
+Default: `develop`
 
 The branch to commit to.
 
+You can use the following tokens to print information about the main project:
+
+- `%sourceBranch%`: The main project's current branch
+
+
 
 #### remote
-Type: `String`  
-Values: `URL|RemoteName|FileSystemPath`  
-Default: `../`  
+Type: `String`
+Values: `URL|RemoteName|FileSystemPath`
+Default: `../`
 
 The remote to push to. Common examples include a distribution repository (Heroku or Scalr), your main project's remote (gh-pages branch on Github), or the local project repository itself (`../`).
 
 
 #### remoteBranch
-Type: `String`  
+Type: `String`
 Default: `''`
 
 The remote branch to push to. Common usage would be for Heroku's `master` branch
@@ -73,55 +78,55 @@ requirement.
 
 
 #### login
-Type: `String`  
+Type: `String`
 Default: `''`
 
-Optional, but provide in conjunction with `token`.  
-Output from grunt-build-control will mask the login with `<CREDENTIALS>`.  
-The `remote` will be formatted to include the token and login.  
+Optional, but provide in conjunction with `token`.
+Output from grunt-build-control will mask the login with `<CREDENTIALS>`.
+The `remote` will be formatted to include the token and login.
 ex: `https://login@github.com/user/repo.git`
 
 
 #### token
-Type: `String`  
+Type: `String`
 Default: `''`
 
-Optional, but provide in conjunction with `login`.  
-Output from grunt-build-control will mask the token with `<TOKEN>`.  
-The `remote` will be formatted to include the token and login.  
+Optional, but provide in conjunction with `login`.
+Output from grunt-build-control will mask the token with `<TOKEN>`.
+The `remote` will be formatted to include the token and login.
 ex: `https://login:token@github.com/user/repo.git`
 
 
 #### commit
-Type: `Boolean`  
-Default: `false`  
+Type: `Boolean`
+Default: `false`
 
 Commits built code to `branch`. A new commit is only created if the built code has changed.
 
 
 #### tag
-Type: `Boolean` or `String`  
-Default: `false`  
+Type: `Boolean` or `String`
+Default: `false`
 
 If set to a string, adds its value as a lightweight git tag to the local built repo. Try loading your project's package.json as a variable and tagging with `pkg.version`.
 
 
 #### push
-Type: `Boolean`  
-Default: `false`  
+Type: `Boolean`
+Default: `false`
 
 Pushes `branch` to `remote`. If `tag` is set, pushes the specified tag as well.
 
 
 #### force
-Type: `Boolean`  
-Default: `false`  
+Type: `Boolean`
+Default: `false`
 
 Pushes `branch` to `remote` with the flag `--force`. This will **NOT** checkout the remote branch, and will **OVERRIDE** `remote` with the repo commits.
 
 
 #### message
-Type: `String`  
+Type: `String`
 Default: `Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%  `
 
 The commit message to use when committing. It must be a safe commit message for the command line, with special characters and double quotes escaped.
@@ -134,31 +139,31 @@ You can use the following tokens to print information about the main project:
 
 
 #### connectCommits
-Type: `Boolean`  
-Default: `true`  
+Type: `Boolean`
+Default: `true`
 
 Make sure that every commit on the built code branch matches a commit on the main project branch. If the main project's working directory has uncommitted changes, a commit task will throw an error.
 
 
 #### shallowFetch
-Type: `Boolean`  
-Default: `false`  
+Type: `Boolean`
+Default: `false`
 
 Fetches `branch` from `remote` with the flag `--depth=1`. Which makes a shallow clone with a history truncated to the last revision. Might bring some boost on long-history repositories. **Note, you must have [Git](http://git-scm.com/) `> 1.9` to use this option.**
 
 
 #### fetchProgress
-Type: `Boolean`  
-Default: `true`  
+Type: `Boolean`
+Default: `true`
 
 Fetches `branch` from `remote` with the flags `--progress` and `--remote`. Setting this option to `false` can help to truncate the logs, useful if you are using build-control in a Continuous Deployment environment.
 
 
 #### config
-Type: `Object`  
-Default: `{}`  
+Type: `Object`
+Default: `{}`
 
-Optional [git config](http://git-scm.com/docs/git-config) settings for the repository when preparing the repository.  
+Optional [git config](http://git-scm.com/docs/git-config) settings for the repository when preparing the repository.
 ex: `{'user.name': 'John Doe'}`
 
 
@@ -273,10 +278,10 @@ Don't check out built code branches while in the main project directory. Differe
 ## Todo:
 
 - replace as many porcelain commands as possible with plumbing.
-- describe or list similar projects with limitations?  
-  https://npmjs.org/package/grunt-github-pages  
-  https://npmjs.org/package/grunt-git-dist  
-  https://npmjs.org/package/grunt-git-selective-deploy  
+- describe or list similar projects with limitations?
+  https://npmjs.org/package/grunt-github-pages
+  https://npmjs.org/package/grunt-git-dist
+  https://npmjs.org/package/grunt-git-selective-deploy
 
 -->
 

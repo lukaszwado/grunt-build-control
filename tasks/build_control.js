@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     var remoteName = null;
 
     var options = this.options({
-      branch: 'dist',
+      branch: 'develop',
       dir: 'dist',
       remote: '../',
       remoteBranch: '',
@@ -67,6 +67,10 @@ module.exports = function (grunt) {
         pathname: remote.pathname
       });
     }
+
+    // Allow variable in branch name
+    options.branch = options.branch
+      .replace(/%sourceBranch%/g, tokens.branch);
 
 
     function maskSensitive(str) {
@@ -256,6 +260,7 @@ module.exports = function (grunt) {
     // Set branch to track remote
     function gitTrack () {
       var remoteBranch = options.remoteBranch || options.branch;
+
       if (shelljs.exec('git config branch.' + options.branch + '.remote', {silent: true}).output.replace(/\n/g, '') !== remoteName) {
         execWrap('git branch --set-upstream-to=' + remoteName + '/' + remoteBranch + ' ' + options.branch);
       }
