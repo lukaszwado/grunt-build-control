@@ -89,7 +89,9 @@ module.exports = function ( grunt ) {
      * @returns {boolean}
      */
     function checkIfEverythingPushed( branch ) {
-      return !shelljs.exec( 'git rev-list ' + branch + '...origin/' + branch, { silent: true } ).output;
+      var local = (shelljs.exec( 'git rev-parse ' + branch, { silent: true } ) || '').output.trim();
+      var remote = (shelljs.exec( 'git rev-parse origin/' + branch, { silent: true } ) || '').output.trim();
+      return local === remote;
     }
 
 
@@ -379,6 +381,14 @@ module.exports = function ( grunt ) {
       assignTokens();
       if ( options.remote === '../' ) verifyRepoBranchIsTracked();
 
+      // Prepare branch name
+      options.branch = prepareBranchName( options.branch, tokens.branch );
+
+      // If requires all changes to be pushed but they arent - throw error
+      if ( options.requireSync && !checkIfEverythingPushed( options.branch ) ) {
+        throw( 'Please push your changes first or change `options.requireSync` to false.' );
+      }
+
       // Change working directory
       shelljs.cd( options.dir );
 
@@ -386,15 +396,8 @@ module.exports = function ( grunt ) {
       initGit();
       initConfig();
 
-      // Prepare branch name
-      options.branch = prepareBranchName( options.branch, tokens.branch );
 
       remoteName = options.remote;
-
-      // If requires all changes to be pushed but they arent - throw error
-      if ( options.requireSync && !checkIfEverythingPushed( options.branch ) ) {
-        throw( 'Please push your changes first or change `options.requireSync` to false.' );
-      }
 
       // Regex to test for remote url
       var remoteUrlRegex = new RegExp( '[\/\\:]' );
