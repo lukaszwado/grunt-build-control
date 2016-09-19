@@ -29,6 +29,7 @@ module.exports = function ( grunt ) {
       remoteBranch: '',
       login: '',
       token: '',
+      requireEverythingPushed: false,
       commit: false,
       tag: false,
       push: false,
@@ -75,12 +76,20 @@ module.exports = function ( grunt ) {
      * @returns string
      */
     function prepareBranchName( name, branch ) {
-      var newName =  name;
-      if ( newName.indexOf( '%sourceBranch%' ) > -1 && branch && branch !== '(unavailable)') {
+      var newName = name;
+      if ( newName.indexOf( '%sourceBranch%' ) > -1 && branch && branch !== '(unavailable)' ) {
         newName = newName
           .replace( /%sourceBranch%/g, branch );
       }
       return newName;
+    }
+
+    /**
+     * Check if there are unpushed changes in source repo
+     * @returns {boolean}
+     */
+    function checkIfEverythingPushed() {
+      return (shelljs.exec( 'git --version', { silent: true } ).output.toLowerCase().indexOf( 'everything up-to-date' ) > -1;
     }
 
 
@@ -378,9 +387,14 @@ module.exports = function ( grunt ) {
       initConfig();
 
       // Prepare branch name
-      options.branch = prepareBranchName(options.branch, tokens.branch);
+      options.branch = prepareBranchName( options.branch, tokens.branch );
 
       remoteName = options.remote;
+
+      // If requires all changes to be pushed but they arent - throw error
+      if ( options.requireEverythingPushed && !checkIfEverythingPushed() ) {
+        throw( 'Please push your changes first or change `options.requireEverythingPushed` to false.' );
+      }
 
       // Regex to test for remote url
       var remoteUrlRegex = new RegExp( '[\/\\:]' );

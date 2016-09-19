@@ -76,7 +76,6 @@ Default: `''`
 The remote branch to push to. Common usage would be for Heroku's `master` branch
 requirement.
 
-
 #### login
 Type: `String`
 Default: `''`
@@ -124,6 +123,11 @@ Default: `false`
 
 Pushes `branch` to `remote` with the flag `--force`. This will **NOT** checkout the remote branch, and will **OVERRIDE** `remote` with the repo commits.
 
+#### requireEverythingPushed
+Type: `boolean`
+Default: `false`
+
+Requires you remote branch to be in sync with your local copy
 
 #### message
 Type: `String`
