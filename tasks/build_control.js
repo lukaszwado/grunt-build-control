@@ -392,8 +392,8 @@ module.exports = function ( grunt ) {
       remoteName = options.remote;
 
       // If requires all changes to be pushed but they arent - throw error
-      if ( options.requireEverythingPushed && !checkIfEverythingPushed() ) {
-        throw( 'Please push your changes first or change `options.requireEverythingPushed` to false.' );
+      if ( options.requireSync && !checkIfEverythingPushed() ) {
+        throw( 'Please push your changes first or change `options.requireSync` to false.' );
       }
 
       // Regex to test for remote url

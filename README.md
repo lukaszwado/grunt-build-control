@@ -123,7 +123,7 @@ Default: `false`
 
 Pushes `branch` to `remote` with the flag `--force`. This will **NOT** checkout the remote branch, and will **OVERRIDE** `remote` with the repo commits.
 
-#### requireEverythingPushed
+#### requireSync
 Type: `boolean`
 Default: `false`
 
